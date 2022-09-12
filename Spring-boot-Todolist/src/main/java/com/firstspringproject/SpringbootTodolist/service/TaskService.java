@@ -43,7 +43,7 @@ public class TaskService implements TaskServable {
         if (task.isCompleted() != oldtask.isCompleted())
             oldtask.setCompleted(task.isCompleted());
 
-        if (task.getTaskId() != oldtask.getTaskId() )
+        if (task.getTaskId() != oldtask.getTaskId() && task.getTaskId()!= null )
             oldtask.setTaskId(task.getTaskId() );
 
         return taskRepository.save(oldtask);
