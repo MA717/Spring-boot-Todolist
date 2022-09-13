@@ -3,14 +3,15 @@ package com.firstspringproject.SpringbootTodolist.service;
 import com.firstspringproject.SpringbootTodolist.entity.Task;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface TaskServable {
      Task saveTask(Task task );
       List<Task> fetchalltasks();
 
-     Task getTask(Long id );
+     Task getTask(UUID id );
 
-    void deleteTask(Long taskId);
+    void deleteTask(UUID taskId);
 
-    Task updateTask(Long taskId, Task task);
+    Task updateTask(UUID taskId, Task task);
 }

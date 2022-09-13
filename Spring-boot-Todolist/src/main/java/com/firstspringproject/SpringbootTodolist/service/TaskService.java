@@ -6,13 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.UUID;
 
 @Component
 public class TaskService implements TaskServable {
    @Autowired
     private TaskRepository taskRepository ;
     public Task saveTask(Task task ){
-        System.out.println(task.toString());
         return taskRepository.save(task);
 
     }
@@ -23,18 +23,18 @@ public class TaskService implements TaskServable {
     }
 
     @Override
-    public Task getTask(Long id ) {
+    public Task getTask(UUID id ) {
         return  taskRepository.findById(id).get();
     }
 
     @Override
-    public void deleteTask(Long taskId) {
+    public void deleteTask(UUID taskId) {
          taskRepository.deleteById(taskId);
          return;
     }
 
     @Override
-    public Task updateTask(Long taskId, Task task) {
+    public Task updateTask(UUID taskId, Task task) {
 
       var oldtask =  taskRepository.findById(taskId).get();
         if (task.getMessage()  != null)
@@ -43,8 +43,8 @@ public class TaskService implements TaskServable {
         if (task.isCompleted() != oldtask.isCompleted())
             oldtask.setCompleted(task.isCompleted());
 
-        if (task.getTaskId() != oldtask.getTaskId() && task.getTaskId()!= null )
-            oldtask.setTaskId(task.getTaskId() );
+        if (task.getUuid() != oldtask.getUuid() && task.getUuid()!= null )
+                oldtask.setUuid(task.getUuid() );
 
         return taskRepository.save(oldtask);
     }

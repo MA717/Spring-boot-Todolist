@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 public class TaskController {
@@ -26,14 +27,14 @@ public class TaskController {
     }
 
     @GetMapping("/task/{id}")
-    public Task getTask(@PathVariable("id")Long taskId)
+    public Task getTask(@PathVariable("id") UUID taskId)
     {
         return taskService.getTask( taskId);
     }
 
 
     @DeleteMapping("/task/{id}")
-    public String deleteTask(@PathVariable("id") Long taskId )
+    public String deleteTask(@PathVariable("id") UUID taskId )
     {
          taskService.deleteTask(taskId);
          return "Task was deleted Successfully ";
@@ -41,7 +42,7 @@ public class TaskController {
 
 
     @PutMapping("/task/{id}")
-    public Task updateTask(@RequestBody Task task , @PathVariable("id") Long taskId )
+    public Task updateTask(@RequestBody Task task , @PathVariable("id") UUID taskId )
     {
        return taskService.updateTask( taskId , task ) ;
     }
