@@ -41,9 +41,7 @@ public class ControlerWebTestClient {
                 .accept(MediaType.APPLICATION_JSON)
                 .exchange()
                 .expectStatus()
-                .isOk()
-                .expectBody()
-                .jsonPath("$.uuid").isEqualTo("0a9cd852-04db-4c97-a6db-c1ec3851b2a6");
+                .isOk() ;
 
     }
 
