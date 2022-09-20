@@ -4,7 +4,11 @@ import com.firstspringproject.SpringbootTodolist.entity.Task;
 import com.firstspringproject.SpringbootTodolist.repository.TaskRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -14,13 +18,16 @@ import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@SpringBootTest
+//@SpringBootTest
+@ExtendWith(MockitoExtension.class)
 class TaskServiceTest {
-    @Autowired
+    //@Autowired
+    @InjectMocks
     private TaskService taskService;
 
 
-    @MockBean
+   // @MockBean
+    @Mock
     private TaskRepository taskRepository;
 
 

@@ -1,5 +1,7 @@
 package com.firstspringproject.SpringbootTodolist.IntegrationTest;
 
+import com.firstspringproject.SpringbootTodolist.entity.Task;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -14,23 +16,48 @@ public class ControlerWebTestClient {
     @Autowired
     private WebTestClient webTestClient;
 
+
     @Test
     void createTask() {
-        this.webTestClient
+        // given
+        Task task = Task.builder().Message("No Sleep Early").Completed(false).build();
+        // when
+        Task result = this.webTestClient
                 .post()
                 .uri("/task")
-                .bodyValue("""
-                         {
-                        	"message": "No Sleep Early",
-                        	"completed":false
-                                                 
-                        }
-                        """)
+                .bodyValue(task)
                 .header(HttpHeaders.CONTENT_TYPE, APPLICATION_JSON_VALUE)
                 .exchange()
-                .expectStatus()
-                .isOk();
+                .expectStatus().isOk()
+                .returnResult(Task.class)
+                .getResponseBody()
+                .blockFirst();
+        // then
+        Assertions.assertThat(result)
+                .usingRecursiveComparison()
+                .ignoringFields("uuid")
+                .isEqualTo(task);
     }
+
+
+//
+//    @Test
+//    void createTask() {
+//        this.webTestClient
+//                .post()
+//                .uri("/task")
+//                .bodyValue("""
+//                         {
+//                        	"message": "No Sleep Early",
+//                        	"completed":false
+//
+//                        }
+//                        """)
+//                .header(HttpHeaders.CONTENT_TYPE, APPLICATION_JSON_VALUE)
+//                .exchange()
+//                .expectStatus()
+//                .isOk();
+//    }
 
 
     @Test
