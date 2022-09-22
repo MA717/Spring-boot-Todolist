@@ -20,6 +20,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @Builder
 @Component
+@Table(name = "tbl_task")
 public class Task {
 
     @Id
