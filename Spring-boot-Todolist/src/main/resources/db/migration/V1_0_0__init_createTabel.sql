@@ -4,4 +4,4 @@ CREATE TABLE  tbl_task (
                            completed bit(1) ,
                            message varchar(100) NOT Null,
                            Primary key(uuid)
-)
+);

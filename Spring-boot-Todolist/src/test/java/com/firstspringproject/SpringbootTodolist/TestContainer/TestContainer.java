@@ -2,7 +2,9 @@ package com.firstspringproject.SpringbootTodolist.TestContainer;
 
 import com.firstspringproject.SpringbootTodolist.entity.Task;
 import com.firstspringproject.SpringbootTodolist.repository.TaskRepository;
+import com.mysql.cj.jdbc.ConnectionImpl;
 import org.assertj.core.api.Assertions;
+import org.flywaydb.core.Flyway;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +20,10 @@ import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
 import java.rmi.registry.Registry;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.List;
+import java.util.Properties;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -36,24 +41,10 @@ public class TestContainer {
     TaskRepository taskRepository;
 
 
-    @Container
-    static MySQLContainer container = new MySQLContainer("mysql:latest");
-
-
-
-
-    @DynamicPropertySource
-    public static void OverrideProp(DynamicPropertyRegistry registry) {
-        registry.add("spring.datasource.url", container::getJdbcUrl);
-        registry.add( "spring.datasource.username", container::getUsername);
-        registry.add("spring.datasource.password" ,container::getPassword);
-
-    }
 
 
     @Test
-    public void delete_task_from_DB()
-    {
+    public void delete_task_from_DB() {
         Task task = Task.builder()
                 .Message("Hello World")
                 .Completed(true)
@@ -73,11 +64,9 @@ public class TestContainer {
     }
 
 
-
     @DisplayName("Test to check wether the task can be found ")
     @Test
-    public void save_task_from_DB()
-    {
+    public void save_task_from_DB() {
 
         Task task = Task.builder()
                 .Message("Hi")
@@ -86,14 +75,14 @@ public class TestContainer {
 
         taskRepository.save(task);
 
-        Task task1  =  taskRepository.findById(task.getUuid()).get() ;
-        assertEquals(task.getUuid() , task1.getUuid());
+        Task task1 = taskRepository.findById(task.getUuid()).get();
+        assertEquals(task.getUuid(), task1.getUuid());
         taskRepository.deleteById(task.getUuid());
     }
 
 
     @Test
-    public void update_task_from_DB(){
+    public void update_task_from_DB() {
 
         Task task = Task.builder()
                 .Message("hello World")
@@ -105,12 +94,10 @@ public class TestContainer {
         task.setMessage("hello World Updated !");
         taskRepository.save(task);
 
-      Task taskResult = taskRepository.findById(task.getUuid()).get();
-      assertEquals(taskResult.getMessage() , "hello World Updated !");
+        Task taskResult = taskRepository.findById(task.getUuid()).get();
+        assertEquals(taskResult.getMessage(), "hello World Updated !");
 
     }
-
-
 
 
 }
